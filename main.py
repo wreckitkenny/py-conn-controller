@@ -1,6 +1,6 @@
 import logging, os
-from flask import Flask, request
 from controller import handle_raw_request, load_config
+from flask import Flask, request
 
 app = Flask(__name__)
 logger = logging.getLogger(os.path.dirname(__file__).split("/")[-1])
