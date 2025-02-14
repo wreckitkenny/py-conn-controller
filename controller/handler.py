@@ -1,6 +1,6 @@
 import json, logging, os
 from .utils import filter_connections, request_checker
-from controller.jira import add_jira_comment
+from .jira import add_jira_comment
 
 logger = logging.getLogger(os.path.dirname(__file__).split("/")[-1])
 
