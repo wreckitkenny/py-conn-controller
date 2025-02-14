@@ -1,8 +1,8 @@
-FROM python:3.12.9-slim
+FROM python:3.12.9-alpine
 LABEL authors="wiky"
 WORKDIR /app
 COPY . /app
-#RUN apt install -y curl gdb
+RUN apk add curl gdb
 RUN pip3 install gunicorn
 RUN pip3 install -r requirements.txt
 
