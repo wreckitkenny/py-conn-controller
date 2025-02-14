@@ -29,4 +29,4 @@ if __name__ == '__main__':
     log = logging.getLogger('werkzeug')
     log.disabled = True
     load_config("config/logging.yaml")
-    app.run()
+    app.run(host='0.0.0.0', port=5000)
