@@ -1,4 +1,4 @@
-import requests, pathlib, yaml, logging.config, logging, os
+import requests, pathlib, yaml, logging.config, logging, os, re
 
 logger = logging.getLogger(os.path.dirname(__file__).split("/")[-1])
 
@@ -35,6 +35,7 @@ def request_checker(conn_list, main_task_key):
         clusterNameList = conn.keys()
         for cluster in clusterNameList:
             connections = conn[cluster]
+            cluster = re.search("(cmc|gds|vnp|cldhn|cldhcm|mts|etl)-(test|prod)-(ocp|rke|oss|kaas)(-.*|\\d+)", cluster.lower()).group()
 
             if cluster not in clusterConfig:
                 logger.warning("[{}] Cluster {} has not been supported in this version yet.".format(main_task_key, cluster))
@@ -44,5 +45,9 @@ def request_checker(conn_list, main_task_key):
             for connection in connections:
                 connection['cluster_name'] = cluster
                 req = requests.post(url=clusterConfig[cluster], json=connection, headers=headers)
+                if req.status_code != 200:
+                    logger.error("[{}] Failed to request {}.".format(main_task_key, clusterConfig[cluster]))
+                    output += "Failed to check connections on {}.\n".format(cluster)
+                    break
                 output += req.text + "\n"
     return output
