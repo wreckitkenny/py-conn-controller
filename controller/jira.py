@@ -4,7 +4,7 @@ import logging, os
 logger = logging.getLogger(os.path.dirname(__file__).split("/")[-1])
 
 def login_jira():
-    jira = JIRA(server=os.environ['JIRA_URL'], token_auth=os.environ['JIRA_TOKEN'])
+    jira = JIRA(server=os.getenv('JIRA_URL'), token_auth=os.getenv('JIRA_TOKEN'))
     return jira
 
 def add_jira_comment(issue_key, comment, jira=login_jira()):
