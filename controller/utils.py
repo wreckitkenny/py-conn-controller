@@ -44,10 +44,12 @@ def request_checker(conn_list, main_task_key):
 
             for connection in connections:
                 connection['cluster_name'] = cluster
-                req = requests.post(url=clusterConfig[cluster], json=connection, headers=headers, timeout=60)
-                if req.status_code != 200:
-                    logger.error("[{}] Failed to request {}.".format(main_task_key, clusterConfig[cluster]))
+                try:
+                    req = requests.post(url=clusterConfig[cluster], json=connection, headers=headers, timeout=60)
+                    req.raise_for_status()
+                    output += req.text + "\n"
+                except requests.exceptions.RequestException as e:
+                    logger.error("[{}] Failed to request {} (Exception: {}).".format(main_task_key, clusterConfig[cluster], e))
                     output += "Failed to check connections on {}.\n".format(cluster)
                     break
-                output += req.text + "\n"
     return output
