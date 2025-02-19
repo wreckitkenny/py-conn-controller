@@ -1,7 +1,13 @@
 # pyConnController - Change Log
 All notable changes to this project will be documented in this file.
 
-## [1.0.4] | 2025-02-19
+## [1.0.5] | 2025-02-19
+### Added/Removed
+- Add filtering multiple sources to destination and source to multiple destinations
+### Changed
+### Fixed
+
+## [1.0.4] | 2025-02-18
 ### Added/Removed
 ### Changed
 - Change the way handling request failures

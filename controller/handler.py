@@ -17,10 +17,11 @@ def handle_raw_request(main_task_key, raw_conn_info):
     parentConnDict = dict()
     for conn in connInfoList:
         clusterName, connections = filter_connections(conn)
-        if clusterName not in parentConnDict:
-            parentConnDict[clusterName] = [connections]
-        else:
-            parentConnDict[clusterName].append(connections)
+        for connection in connections:
+            if clusterName not in parentConnDict:
+                parentConnDict[clusterName] = [connection]
+            else:
+                parentConnDict[clusterName].append(connection)
     parentConnList.append(parentConnDict)
 
     response = request_checker(parentConnList, main_task_key)
