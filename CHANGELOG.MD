@@ -1,6 +1,13 @@
 # pyConnController - Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.7] | 2025-02-20
+### Added/Removed
+- Add checker request timeout
+### Changed
+- Move uri to source code instead of config file
+### Fixed
+
 ## [1.0.6] | 2025-02-20
 ### Added/Removed
 - Support multiple sources, destinations and ports

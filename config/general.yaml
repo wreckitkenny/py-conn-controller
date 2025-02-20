@@ -1,2 +1,3 @@
 clusterConfig:
-  cmc-test-ocp02: http://127.0.0.1:5000/checkConnection
+  cmc-test-ocp02: http://127.0.0.1:5000
+requestTimeout: 180

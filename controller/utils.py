@@ -36,12 +36,13 @@ def request_checker(conn_list, main_task_key):
     headers = {'Content-Type': 'application/json'}
     output = "[HT-Platforms] Đây là hệ thống kiểm tra kết nối tự động dành riêng cho các dịch vụ trên K8S (comment */checkconn* để kiểm tra kết nối bằng tay).\n{code:bash}\n"
     notSupportedOutput = "\n"
+    req = ""
 
     logger.info("[{}] Requesting pyConnChecker to check connections.".format(main_task_key))
 
     for conn in conn_list:
-        clusterNameList = conn.keys()
-        for cluster in clusterNameList:
+        clusterNameDictKey = conn.keys()
+        for cluster in clusterNameDictKey:
             connections = conn[cluster]
             cluster = re.search("(cmc|gds|vnp|cldhn|cldhcm|mts|etl)-(test|prod)-(ocp|rke|oss|kaas)(-.*|\\d+)", cluster.lower()).group()
 
@@ -52,12 +53,13 @@ def request_checker(conn_list, main_task_key):
 
             for connection in connections:
                 connection['cluster_name'] = cluster
+                url = clusterConfig[cluster] + "/checkConnection"
                 try:
-                    req = requests.post(url=clusterConfig[cluster], json=connection, headers=headers, timeout=60)
+                    req = requests.post(url=url, json=connection, headers=headers, timeout=load_config("config/general.yaml")["requestTimeout"])
                     req.raise_for_status()
                     output += req.text + "\n"
                 except requests.exceptions.RequestException as e:
-                    logger.error("[{}] Failed to request {} (Exception: {}).".format(main_task_key, clusterConfig[cluster], e))
+                    logger.error("[{}] Failed to request {} (Exception: {}).".format(main_task_key, req.url, e))
                     output += "Failed to check connections on {}.\n".format(cluster)
     return output + notSupportedOutput
 
