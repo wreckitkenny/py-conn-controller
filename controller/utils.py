@@ -1,4 +1,5 @@
 import requests, pathlib, yaml, logging.config, logging, os, re
+from itertools import product
 
 logger = logging.getLogger(os.path.dirname(__file__).split("/")[-1])
 
@@ -13,21 +14,9 @@ def filter_connections(conn):
         if c['originId'] in ["f2c4174c-5cac-479d-a5a5-b38b83ea778d","362c565e-efa8-45e9-aa6f-ca6d14ff1075"]: fDict['dst_name'] = c['value']
         if c['originId'] in ["18aa1412-42a6-4c0d-a4a7-9978f83f3d92","a0c70a2d-edf2-4293-860e-b7d6e197beb9"]: fDict['dst_port'] = c['value']
 
-    fList.append(fDict)
-
-    if "\n" in fDict['src_name']:
-        fList = list()
-        for sn in fDict['src_name'].split("\n"):
-            tmpDict = fDict.copy()
-            tmpDict['src_name'] = sn
-            fList.append(tmpDict.copy())
-
-    if "\n" in fDict['dst_name']:
-        fList = list()
-        for dn in fDict['dst_name'].split("\n"):
-            tmpDict = fDict.copy()
-            tmpDict['dst_name'] = dn
-            fList.append(tmpDict.copy())
+    for fKey in fDict: fDict[fKey] = fDict[fKey].split("\n")
+    for combination in product(*fDict.values()):
+        fList.append(dict(zip(fDict.keys(), combination)))
 
     return clusterName, fList
 

@@ -1,10 +1,17 @@
 # pyConnController - Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] | 2025-02-20
+### Added/Removed
+- Support multiple sources, destinations and ports
+### Changed
+### Fixed
+
 ## [1.0.5] | 2025-02-19
 ### Added/Removed
 - Add filtering multiple sources to destination and source to multiple destinations
 ### Changed
+- Change request timeout to connection checker
 ### Fixed
 
 ## [1.0.4] | 2025-02-18
