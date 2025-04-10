@@ -1,6 +1,12 @@
 # pyConnController - Change Log
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] | 2025-04-10
+### Added/Removed
+- Add new connection id
+### Changed
+### Fixed
+
 ## [1.0.7] | 2025-02-20
 ### Added/Removed
 - Add checker request timeout

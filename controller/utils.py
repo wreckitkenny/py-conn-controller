@@ -80,6 +80,8 @@ def parse_fields(json_request, request_type):
     match connType:
         case "10620":
             rawConnInfo = json_request['fields']['customfield_10817']
+        case "11203":
+            rawConnInfo = json_request['fields']['customfield_10817']
         case "10622":
             rawConnInfo = json_request['fields']['customfield_11461']
         case default:
